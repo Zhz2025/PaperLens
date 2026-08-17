@@ -2,17 +2,14 @@ import os
 from functools import lru_cache
 from pathlib import Path
 
-DEFAULT_DATA_DIR = r"D:\PaperLens"
+DEFAULT_DATA_DIR = r"E:\PaperLens\data"
 
 
 class Settings:
     def __init__(self) -> None:
-        raw = os.environ.get("PAPERLENS_DATA_DIR")
-        if not raw:
-            if not os.path.isdir(os.path.splitdrive(DEFAULT_DATA_DIR)[0] or "/"):
-                raw = os.path.join(os.environ.get("LOCALAPPDATA", ""), "PaperLens")
-            else:
-                raw = DEFAULT_DATA_DIR
+        # 本机定制：无 D 盘且禁止写入 C 盘，数据目录固定为 E:\PaperLens\data；
+        # PAPERLENS_DATA_DIR 环境变量仍可显式覆盖。
+        raw = os.environ.get("PAPERLENS_DATA_DIR") or DEFAULT_DATA_DIR
         self.data_dir = Path(raw)
         # 模型写目录固定为数据目录 models/；PAPERLENS_MODELS_DIR 仅作内置只读模型目录（随安装包分发）
         self.models_dir = self.data_dir / "models"

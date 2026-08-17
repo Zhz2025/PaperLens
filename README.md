@@ -21,7 +21,7 @@
 
 ## 安装
 
-从 [Releases](https://github.com/HanQingHub/PaperLens/releases) 下载 `PaperLens_<版本>_x64-setup.exe`。默认安装到 D 盘（D 盘不存在时安装到 `%LOCALAPPDATA%`）。
+从 [Releases](https://github.com/HanQingHub/PaperLens/releases) 下载 `PaperLens_<版本>_x64-setup.exe`。上游默认安装到 D 盘（D 盘不存在时安装到 `%LOCALAPPDATA%`）；本机定制版改为安装到 `E:\PaperLens\PaperLens`，数据目录固定为 `E:\PaperLens\data`（本机无 D 盘且禁止写入 C 盘）。
 
 模型分发说明：
 

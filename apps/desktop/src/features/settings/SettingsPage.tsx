@@ -445,7 +445,7 @@ export default function SettingsPage() {
 
         {/* 数据 */}
         <Section title="数据">
-          <Row label="数据目录" hint="论文、数据库与模型文件的存放位置（默认 D:\PaperLens，安装时自动选择）">
+          <Row label="数据目录" hint="论文、数据库与模型文件的存放位置（本机默认 E:\PaperLens\data）">
             <span className="text-[12px] text-text-faint">由后端管理</span>
           </Row>
           <div className="my-2 border-t border-border" />

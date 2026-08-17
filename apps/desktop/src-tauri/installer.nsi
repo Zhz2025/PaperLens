@@ -511,16 +511,10 @@ Function .onInit
         StrCpy $INSTDIR "$PROGRAMFILES\${PRODUCTNAME}"
       ${EndIf}
     !else if "${INSTALLMODE}" == "currentUser"
-      ; Prefer a D: drive (small C:), mirroring the backend data-dir fallback in
-      ; apps/server/app/core/config.py; fall back to %LOCALAPPDATA% without a D: drive.
-      ; NOTE: ${FileExists} "D:\" is unreliable for drive-root detection (returns
-      ; false even when D: exists), so use GetDriveType (1 = DRIVE_NO_ROOT_DIR).
-      System::Call 'kernel32::GetDriveType(t "D:\") i .R0'
-      ${If} $R0 <> 1
-        StrCpy $INSTDIR "D:\PaperLens\${PRODUCTNAME}"
-      ${Else}
-        StrCpy $INSTDIR "$LOCALAPPDATA\${PRODUCTNAME}"
-      ${EndIf}
+      ; Customized for this machine (E:\PaperLens workspace): the D: drive does
+      ; not exist and C: (%LOCALAPPDATA%) is not allowed, so install to the
+      ; E: workspace unconditionally. Data dir stays at E:\PaperLens\data.
+      StrCpy $INSTDIR "E:\PaperLens\${PRODUCTNAME}"
     !endif
 
     Call RestorePreviousInstallLocation
@@ -888,10 +882,9 @@ Section Uninstall
     DeleteRegKey /ifempty HKCU "${MANUKEY}"
 
     SetShellVarContext current
-    ; PaperLens stores user data in D:\PaperLens (fallback: %LOCALAPPDATA%\PaperLens),
+    ; PaperLens stores user data in E:\PaperLens\data (customized for this machine),
     ; NOT in the standard %APPDATA%\{bundleId} location.
-    RmDir /r "D:\PaperLens"
-    RmDir /r "$LOCALAPPDATA\PaperLens"
+    RmDir /r "E:\PaperLens\data"
   ${EndIf}
 
   !ifmacrodef NSIS_HOOK_POSTUNINSTALL

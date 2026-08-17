@@ -154,8 +154,8 @@ export default function WizardPage() {
               <div className="mt-5 rounded-lg border border-border bg-panel-soft p-3.5 text-left">
                 <div className="mb-1 text-xs font-medium text-text-soft">数据目录</div>
                 <p className="text-[12px] leading-5 text-text-faint">
-                  论文、批注、生词与模型默认存放于独立数据目录（推荐 <code className="rounded bg-bg-soft px-1">D:\PaperLens</code>，无 D 盘时自动使用
-                  C 盘用户目录）。PDF 与模型文件不会写入系统盘其他位置；目录可随时在设置中查看。
+                  论文、批注、生词与模型默认存放于独立数据目录（本机为 <code className="rounded bg-bg-soft px-1">E:\PaperLens\data</code>）。
+                  PDF 与模型文件不会写入系统盘（C 盘）；目录可随时在设置中查看。
                 </p>
               </div>
 

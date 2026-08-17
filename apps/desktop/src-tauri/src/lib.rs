@@ -7,7 +7,7 @@
 //!   (tauri-plugin-shell's `kill` only terminates the direct child).
 //! - Write the handshake token to `{data dir}\.token` for the sidecar to pick up.
 
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 use std::sync::Mutex;
 
 use tauri::{Manager, RunEvent};
@@ -22,7 +22,7 @@ const SIDECAR_BIN: &str = "paperlens-server";
 
 /// Default data directory, consistent with the backend configuration.
 /// Can be overridden with the `PAPERLENS_DATA_DIR` environment variable.
-const DEFAULT_DATA_DIR: &str = r"D:\PaperLens";
+const DEFAULT_DATA_DIR: &str = r"E:\PaperLens\data";
 
 /// Fixed backend port (see `scripts/server_entry.py`, `PAPERLENS_PORT`).
 /// Injected explicitly to shield against a system-level PAPERLENS_PORT.
@@ -32,22 +32,16 @@ const DEFAULT_PORT: &str = "8737";
 const TOKEN_FILE: &str = ".token";
 
 /// Resolve the data directory, mirroring the backend fallback in
-/// `apps/server/app/core/config.py`: explicit env wins; otherwise
-/// `D:\PaperLens` when the D: drive exists, else `%LOCALAPPDATA%\PaperLens`.
+/// `apps/server/app/core/config.py`: explicit env wins; otherwise the
+/// fixed default `E:\PaperLens\data` (customized for this machine: no
+/// D: drive and C: (%LOCALAPPDATA%) is not allowed).
 fn resolve_data_dir() -> String {
     if let Ok(d) = std::env::var("PAPERLENS_DATA_DIR") {
         if !d.is_empty() {
             return d;
         }
     }
-    if Path::new("D:\\").is_dir() {
-        DEFAULT_DATA_DIR.to_string()
-    } else {
-        PathBuf::from(std::env::var("LOCALAPPDATA").unwrap_or_default())
-            .join("PaperLens")
-            .to_string_lossy()
-            .into_owned()
-    }
+    DEFAULT_DATA_DIR.to_string()
 }
 
 /// Managed app state guarding the sidecar lifetime.
