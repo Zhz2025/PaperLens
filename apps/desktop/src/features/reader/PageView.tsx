@@ -126,6 +126,7 @@ const PageView = memo(function PageView({ pdf, pageIndex, active, renderScale, p
           const tmp = document.createElement('div')
           tmp.className = 'textLayer'
           tmp.style.setProperty('--scale-factor', String(hiScale))
+          tmp.style.setProperty('--total-scale-factor', String(hiScale))
           textLayer = new TextLayer({
             textContentSource: page.streamTextContent(),
             container: tmp,
@@ -294,7 +295,10 @@ const PageView = memo(function PageView({ pdf, pageIndex, active, renderScale, p
           <div
             ref={textDivRef}
             className="textLayer"
-            style={{ ['--scale-factor' as string]: String(hiScale) }}
+            style={{
+              ['--scale-factor' as string]: String(hiScale),
+              ['--total-scale-factor' as string]: String(hiScale),
+            }}
           />
         )}
 
